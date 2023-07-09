@@ -5,41 +5,35 @@ import { Component } from '@angular/core';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
 })
-export class IndexComponent {}
+export class IndexComponent {
+  validarFormulario(event: Event) {
+    event.preventDefault(); // Detener la recarga de la página
 
-document.addEventListener('DOMContentLoaded', () => {
-  const usuario = document.getElementById('user') as HTMLInputElement;
-  const password = document.getElementById('passw') as HTMLInputElement;
-  const form = document.getElementById('form') as HTMLFormElement;
-  const parrafo = document.getElementById('warnings') as HTMLElement;
-  const listinput = document.querySelectorAll('.botons');
+    const email = (<HTMLInputElement>document.getElementById('user')).value;
+    const password = (<HTMLInputElement>document.getElementById('passw')).value;
+    const emailError = document.querySelector('.correo .warnings')!;
+    const passwordError = document.querySelector('.pass .warnings')!;
 
-  form.addEventListener('submit', (e: SubmitEvent) => {
-    e.preventDefault();
-    let condicion = validar();
-    if (condicion) {
-      location.href = 'inicio';
+    // Validar el email
+    if (!email) {
+      emailError.innerHTML = 'El campo de correo electrónico es requerido';
+    } else if (!this.validarEmail(email)) {
+      emailError.innerHTML = 'El correo electrónico ingresado no es válido';
+    } else {
+      emailError.innerHTML = '';
     }
-  });
 
-  function validar(): boolean {
-    let condicion = true;
-    listinput.forEach((element: Element) => {
-      element.firstElementChild!.innerHTML = '';
-    });
-    if (usuario.value.length < 1 || usuario.value.trim() === '') {
-      mjserror('correo', 'Correo no válido');
-      condicion = false;
+    // Validar la contraseña
+    if (!password) {
+      passwordError.innerHTML = 'El campo de contraseña es requerido';
+    } else {
+      passwordError.innerHTML = '';
     }
-    if (password.value.length < 6 || password.value.trim() === '') {
-      mjserror('pass', 'Contraseña no válida');
-      condicion = false;
-    }
-    return condicion;
   }
 
-  function mjserror(classboton: string, mensaje: string) {
-    let elemento = document.querySelector(`.${classboton}`) as HTMLElement;
-    elemento.firstElementChild!.innerHTML = mensaje;
+  validarEmail(email: string): boolean {
+    // Expresión regular para validar el formato de un email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
-});
+}

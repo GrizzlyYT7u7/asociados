@@ -22,7 +22,7 @@
         </ul>
       </nav>
     </header>
-    <form action="" class="form" id="form">
+    <form class="form" id="form" (submit)="validarFormulario($event)">
       <div class="contenedor">
         <h1>Bienvenido</h1>
         <div class="botons correo">
@@ -36,15 +36,13 @@
             class="boton"
             type="password"
             id="passw"
-            placeholder="Contrase&ntilde;a"
+            placeholder="Contraseña"
           />
           <label for="contraseña"></label>
         </div>
-        <input class="control" type="submit" value="Iniciar Sesi&oacute;n" />
+        <input class="control" type="submit" value="Iniciar Sesión" />
         <p>
-          A&uacute;n no tienes una Cuenta?<a href="registro"
-            ><b>Crear Cuenta</b></a
-          >
+          Aún no tienes una Cuenta?<a href="registro"><b>Crear Cuenta</b></a>
         </p>
       </div>
     </form>

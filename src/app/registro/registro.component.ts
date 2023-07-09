@@ -5,122 +5,127 @@ import { Component } from '@angular/core';
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css'],
 })
-export class RegistroComponent {}
+export class RegistroComponent {
+  validarFormulario(event: Event) {
+    event.preventDefault(); 
+    const name = (<HTMLInputElement>document.getElementById('name')).value;
+    const cedu = (<HTMLInputElement>document.getElementById('cedu')).value;
+    const correo = (<HTMLInputElement>document.getElementById('correo')).value;
+    const celular = (<HTMLInputElement>document.getElementById('celular')).value;
+    const phonerepre = (<HTMLInputElement>document.getElementById('phonerepre')).value;
+    const dire = (<HTMLInputElement>document.getElementById('dire')).value;
+    const tipoDiscapacidad = (<HTMLSelectElement>document.getElementById('text1')).value;
+    const gradoDependencia = (<HTMLSelectElement>document.getElementById('text2')).value;
+    const genero = document.querySelector('input[name="gender"]:checked');
+    const password = (<HTMLInputElement>document.getElementById('contraseña')).value;
+    const repPassword = (<HTMLInputElement>document.getElementById('repcontra')).value;
+    const terminos = (<HTMLInputElement>document.getElementById('terminosycondiciones')).checked;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const nombre = document.getElementById('name') as HTMLInputElement;
-  const id = document.getElementById('cedu') as HTMLInputElement;
-  const email = document.getElementById('correo') as HTMLInputElement;
-  const telefono = document.getElementById('celular') as HTMLInputElement;
-  const celurepre = document.getElementById('phonerepre') as HTMLInputElement;
-  const ubica = document.getElementById('dire') as HTMLInputElement;
-  const pass = document.getElementById('contraseña') as HTMLInputElement;
-  const contra = document.getElementById('repcontra') as HTMLInputElement;
-  const select = document.getElementById('text1') as HTMLSelectElement;
-  const select2 = document.getElementById('text2') as HTMLSelectElement;
-  const sexo = document.getElementById('tipgenero') as HTMLInputElement;
-  const terminos = document.getElementById(
-    'terminosycondiciones'
-  ) as HTMLInputElement;
-  const form = document.getElementById('form') as HTMLFormElement;
-  const listinput = document.querySelectorAll('.botons');
+    const nameError = document.querySelector('.name .warnings')!;
+    const ceduError = document.querySelector('.cedu .warnings')!;
+    const correoError = document.querySelector('.correo .warnings')!;
+    const celularError = document.querySelector('.celular .warnings')!;
+    const phonerepreError = document.querySelector('.phonerepre .warnings')!;
+    const direError = document.querySelector('.dire .warnings')!;
+    const tipoDiscapacidadError = document.querySelector('.text1 .warnings')!;
+    const gradoDependenciaError = document.querySelector('.text2 .warnings')!;
+    const generoError = document.querySelector('.tipgenero .warnings')!;
+    const passwordError = document.querySelector('.pass .warnings')!;
+    const repPasswordError = document.querySelector('.contra .warnings')!;
+    const terminosError = document.querySelector('.terminosycondiciones .warnings')!;
 
-  form.addEventListener('submit', (e: Event) => {
-    e.preventDefault();
-    let condicion = validacion();
-    if (condicion) {
-      location.href = 'index.html';
-    }
-    verificargenero();
-  });
-
-  function validacion(): boolean {
-    let condicion = true;
-    listinput.forEach((element: Element) => {
-      (element as HTMLElement).firstElementChild!.innerHTML = '';
-    });
-
-    if (nombre.value.length < 1 || nombre.value.trim() === '') {
-      mjserror('name', 'Nombre no válido');
-      condicion = false;
-    }
-    if (
-      id.value.length !== 10 ||
-      id.value.trim() === '' ||
-      isNaN(Number(id.value))
-    ) {
-      mjserror('cedu', 'Cédula no válida');
-      condicion = false;
-    }
-    if (email.value.length < 1 || email.value.trim() === '') {
-      mjserror('correo', 'Correo no válido');
-      condicion = false;
-    }
-    if (
-      telefono.value.length !== 10 ||
-      telefono.value.trim() === '' ||
-      isNaN(Number(telefono.value))
-    ) {
-      mjserror('celular', 'Celular no válido');
-      condicion = false;
-    }
-    if (
-      celurepre.value.length !== 10 ||
-      celurepre.value.trim() === '' ||
-      isNaN(Number(celurepre.value))
-    ) {
-      mjserror('phonerepre', 'Celular no válido');
-      condicion = false;
-    }
-    if (ubica.value.length < 3 || ubica.value.trim() === '') {
-      mjserror('dire', 'Dirección no válida');
-      condicion = false;
-    }
-    if (select.value === '0' || select.value === '') {
-      mjserror('text1', 'Elija un Tipo*');
-      condicion = false;
-    }
-    if (select2.value === '0' || select2.value === '') {
-      mjserror('text2', 'Elija un Grado*');
-      condicion = false;
-    }
-    if (pass.value.length < 6 || pass.value.trim() === '') {
-      mjserror('pass', 'Ingrese una Contraseña de al menos 6 caracteres');
-      condicion = false;
-    }
-    if (contra.value !== pass.value) {
-      mjserror('contra', 'Las Contraseñas no Coinciden');
-      condicion = false;
-    }
-    if (!terminos.checked) {
-      mjserror('terminosycondiciones', 'Acepte*');
-      condicion = false;
-    }
-    return condicion;
-  }
-
-  function mjserror(classboton: string, mensaje: string) {
-    let elemento = document.querySelector(`.${classboton}`) as HTMLElement;
-    elemento.firstElementChild!.innerHTML = mensaje;
-  }
-
-  function verificargenero(): boolean {
-    const tipe1 = document.getElementById('tipe1') as HTMLInputElement;
-    const tipe2 = document.getElementById('tipe2') as HTMLInputElement;
-    const tipe3 = document.getElementById('tipe3') as HTMLInputElement;
-
-    if (tipe1.checked) {
-      // Do something
-      return true;
-    } else if (tipe2.checked) {
-      // Do something
-      return true;
-    } else if (tipe3.checked) {
-      // Do something
-      return true;
+    // Validar el nombre
+    if (!name) {
+      nameError.innerHTML = 'El campo de nombres es requerido';
     } else {
-      mjserror('tipgenero', 'Elija un Género');
-      throw new Error('No gender selected');
+      nameError.innerHTML = '';
+    }
+
+    // Validar la cédula
+    if (!cedu) {
+      ceduError.innerHTML = 'El campo de cédula es requerido';
+    } else {
+      ceduError.innerHTML = '';
+    }
+
+    // Validar el correo electrónico
+    if (!correo) {
+      correoError.innerHTML = 'El campo de correo electrónico es requerido';
+    } else if (!this.validarEmail(correo)) {
+      correoError.innerHTML = 'El correo electrónico ingresado no es válido';
+    } else {
+      correoError.innerHTML = '';
+    }
+
+    // Validar el celular
+    if (!celular) {
+      celularError.innerHTML = 'El campo de celular es requerido';
+    } else {
+      celularError.innerHTML = '';
+    }
+
+    // Validar el celular del representante
+    if (!phonerepre) {
+      phonerepreError.innerHTML = 'El campo de celular del representante es requerido';
+    } else {
+      phonerepreError.innerHTML = '';
+    }
+
+    // Validar la dirección
+    if (!dire) {
+      direError.innerHTML = 'El campo de dirección es requerido';
+    } else {
+      direError.innerHTML = '';
+    }
+
+    // Validar el tipo de discapacidad
+    if (tipoDiscapacidad === '0') {
+      tipoDiscapacidadError.innerHTML = 'Debe seleccionar un tipo de discapacidad';
+    } else {
+      tipoDiscapacidadError.innerHTML = '';
+    }
+
+    // Validar el grado de dependencia
+    if (gradoDependencia === '0') {
+      gradoDependenciaError.innerHTML = 'Debe seleccionar un grado de dependencia';
+    } else {
+      gradoDependenciaError.innerHTML = '';
+    }
+
+    // Validar el género
+    if (!genero) {
+      generoError.innerHTML = 'Debe seleccionar un género';
+    } else {
+      generoError.innerHTML = '';
+    }
+
+    // Validar la contraseña
+    if (!password) {
+      passwordError.innerHTML = 'El campo de contraseña es requerido';
+    } else {
+      passwordError.innerHTML = '';
+    }
+
+    // Validar la repetición de contraseña
+    if (!repPassword) {
+      repPasswordError.innerHTML = 'Debe repetir la contraseña';
+    } else if (password !== repPassword) {
+      repPasswordError.innerHTML = 'Las contraseñas no coinciden';
+    } else {
+      repPasswordError.innerHTML = '';
+    }
+
+    // Validar los términos y condiciones
+    if (!terminos) {
+      terminosError.innerHTML = 'Debe aceptar los términos y condiciones';
+    } else {
+      terminosError.innerHTML = '';
     }
   }
-});
+
+  validarEmail(email: string): boolean {
+    // Expresión regular para validar el formato de un email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+}
