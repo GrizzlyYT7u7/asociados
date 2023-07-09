@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Inicar Sesion</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="nav">
+      <h2 class="logo">
+        <a href="https://www.uleam.edu.ec/"
+          ><img src="/assets/logo.png" alt="" class="img"
+        /></a>
+      </h2>
+      <nav>
+        <ul>
+          <li>
+            <a href="registro"><i class="fas fa-user-plus"></i>Registro</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <form action="" class="form" id="form">
+      <div class="contenedor">
+        <h1>Bienvenido</h1>
+        <div class="botons correo">
+          <p class="warnings"></p>
+          <input class="boton" type="email" id="user" placeholder="E-mail" />
+          <label for="correo"></label>
+        </div>
+        <div class="botons pass">
+          <p class="warnings"></p>
+          <input
+            class="boton"
+            type="password"
+            id="passw"
+            placeholder="Contrase&ntilde;a"
+          />
+          <label for="contraseña"></label>
+        </div>
+        <input class="control" type="submit" value="Iniciar Sesi&oacute;n" />
+        <p>
+          A&uacute;n no tienes una Cuenta?<a href="registro"
+            ><b>Crear Cuenta</b></a
+          >
+        </p>
+      </div>
+    </form>
+  </body>
+</html>
